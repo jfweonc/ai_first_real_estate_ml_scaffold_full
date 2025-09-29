@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/capability-request.schema.json",
+  "title": "capability_request",
+  "type": "object",
+  "required": [
+    "capability_request"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "capability_request": {
+      "type": "object",
+      "required": [
+        "from",
+        "reason",
+        "options",
+        "acceptance_gap"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "route_to",
+              "why"
+            ],
+            "properties": {
+              "route_to": {
+                "type": "string"
+              },
+              "why": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "thin_slice_done": {
+          "type": "string"
+        },
+        "acceptance_gap": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

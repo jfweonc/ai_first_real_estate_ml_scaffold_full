@@ -1,0 +1,7 @@
+# Automatic promotion policy for Phase 5.6
+improve_mae_pct: 2.0         # challenger must beat champion MAE by >= 2%
+coverage_target: 0.90        # 90% interval coverage
+coverage_tolerance: 0.02     # +/- 2%
+no_segment_regressions: true # by price quartile, zipcode cluster
+shadow_days: 2               # optional shadow run before promote
+rollback_window_hours: 72    # auto-demote if breach in this window

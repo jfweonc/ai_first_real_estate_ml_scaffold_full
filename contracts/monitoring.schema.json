@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/monitoring.schema.json",
+  "title": "monitoring_metrics",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "timestamp",
+    "model_version",
+    "metrics"
+  ],
+  "properties": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "model_version": {
+      "type": "string"
+    },
+    "data_version": {
+      "type": "string"
+    },
+    "segment": {
+      "type": "string"
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mae": {
+          "type": "number"
+        },
+        "medae": {
+          "type": "number"
+        },
+        "mape": {
+          "type": "number"
+        },
+        "coverage_90": {
+          "type": "number"
+        },
+        "psi_pred": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}

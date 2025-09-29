@@ -1,0 +1,42 @@
+# Orchestrator policy (semi-automatic slicing)
+round_limits:
+  proposals: 2
+  failures: 2
+acceptance:
+  coverage_min: 0.90
+  idempotence_required: true
+promotion:
+  mae_improve_pct: 2.0
+  coverage_90_target: 0.90
+  coverage_tol: 0.02
+auto_opt:
+  enabled: true
+  trials: 75
+  stop_no_gain_trials: 15
+manager_escalate:
+  capability_red: true
+  schema_change: true
+  pii_touch: true
+
+role_to_model:
+  manager: gpt-5
+  pm: gpt-5
+  architect: gpt-5
+  security: gpt-5
+  sre: gpt-5
+  data_ml: gpt-5
+  backend: codex-latest
+  frontend: codex-latest
+  test: codex-latest
+
+lanes:
+  build: ["test", "backend", "test"]
+  model: ["data_ml", "backend", "test"]
+
+prompt_files:
+  common:
+    - ".agents/guardrails.md"
+    - "context/phase_plan.md"
+    - "context/file_map.md"
+  test_extra: []
+  backend_extra: []

@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/manager-decision.schema.json",
+  "title": "manager_decision",
+  "type": "object",
+  "required": [
+    "decision"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "decision": {
+      "type": "object",
+      "required": [
+        "role",
+        "goal",
+        "files",
+        "smallest_next_increment",
+        "acceptance",
+        "priority"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "enum": [
+            "pm",
+            "architect",
+            "backend",
+            "frontend",
+            "test",
+            "data_ml",
+            "security",
+            "sre"
+          ]
+        },
+        "goal": {
+          "type": "string",
+          "minLength": 1
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "smallest_next_increment": {
+          "type": "string"
+        },
+        "acceptance": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "priority": {
+          "enum": [
+            "Must",
+            "Should",
+            "Could"
+          ]
+        },
+        "risks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "alternatives": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "role",
+          "why"
+        ],
+        "properties": {
+          "role": {
+            "enum": [
+              "pm",
+              "architect",
+              "backend",
+              "frontend",
+              "test",
+              "data_ml",
+              "security",
+              "sre"
+            ]
+          },
+          "why": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "capability_change": {
+      "type": "object",
+      "required": [
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "enum": [
+            "route",
+            "temp_extend",
+            "propose_adr"
+          ]
+        },
+        "extended_capability": {
+          "type": "string"
+        },
+        "expires": {
+          "type": "string"
+        },
+        "guardrails_updates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

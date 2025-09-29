@@ -1,0 +1,21 @@
+[tool.pytest.ini_options]
+addopts = "-q --cov=tools --cov=src --cov-report=term-missing --cov-fail-under=90"
+
+[tool.ruff]
+line-length = 120
+select = ["E","F","I","B","UP","SIM","PL"]
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+line_length = 120
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unreachable = true
+ignore_missing_imports = true

@@ -1,0 +1,46 @@
+stories:
+  - id: P05-CLI
+    phase: "0.5"
+    title: "CSV CLI skeleton"
+    priority: Must
+    status: ready
+    lane: build
+    acceptance:
+      - "relml import-csv --help exits 0 and shows usage"
+      - "Command registered under Typer CLI"
+  - id: P05-VALIDATE
+    phase: "0.5"
+    title: "Parse & validate a small sample"
+    priority: Must
+    status: ready
+    lane: build
+    acceptance:
+      - "Reject bad headers; validate required fields"
+      - "Structured JSON log shows parsed_row_count"
+  - id: P05-IDEMPOTENCE
+    phase: "0.5"
+    title: "Idempotence (ledger)"
+    priority: Must
+    status: ready
+    lane: build
+    acceptance:
+      - "Second run on same file inserts 0 rows"
+      - "Exit code 0; log inserts=0 on second run"
+  - id: P05-IMAGE-MANIFEST
+    phase: "0.5"
+    title: "Image manifest accounting"
+    priority: Should
+    status: ready
+    lane: build
+    acceptance:
+      - "images_count computed per listing"
+      - "images_download_status ∈ {none, partial, complete}"
+  - id: P05-COVERAGE-REPORT
+    phase: "0.5"
+    title: "Coverage report + gap-fill manifest"
+    priority: Must
+    status: ready
+    lane: build
+    acceptance:
+      - "Generate data/reports/coverage_*.md"
+      - "Create selected_listings.parquet with expected columns"

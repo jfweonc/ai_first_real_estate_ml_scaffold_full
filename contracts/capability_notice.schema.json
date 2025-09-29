@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/capability-notice.schema.json",
+  "title": "capability_notice",
+  "type": "object",
+  "required": [
+    "capability_notice"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "capability_notice": {
+      "type": "object",
+      "required": [
+        "from",
+        "level",
+        "capability",
+        "scope",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "level": {
+          "enum": [
+            "GREEN",
+            "YELLOW"
+          ]
+        },
+        "capability": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "risk": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tests_added": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expires": {
+          "type": "string"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

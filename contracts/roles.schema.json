@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/roles.schema.json",
+  "title": "roles_registry",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "permanent",
+          "temporary"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "permanent": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "temporary": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "capability",
+                "expires"
+              ],
+              "properties": {
+                "capability": {
+                  "type": "string"
+                },
+                "expires": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "sunset": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "roles"
+  ]
+}
