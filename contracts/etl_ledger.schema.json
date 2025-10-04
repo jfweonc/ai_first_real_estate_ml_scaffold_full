@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ETL Ledger Record",
+  "type": "object",
+  "required": [
+    "file_hash",
+    "raw_source",
+    "discovered_at",
+    "status"
+  ],
+  "properties": {
+    "file_hash": {
+      "type": "string"
+    },
+    "raw_source": {
+      "type": "string"
+    },
+    "discovered_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ingested_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "discovered",
+        "ingested",
+        "skipped",
+        "failed"
+      ]
+    },
+    "rows_total": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "rows_clean": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "rows_quarantined": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

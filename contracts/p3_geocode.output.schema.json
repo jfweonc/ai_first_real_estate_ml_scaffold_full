@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "P3 Geocode Output Row",
+  "type": "object",
+  "required": ["listing_key", "lat", "lon", "geocode_score", "geocode_source"],
+  "properties": {
+    "listing_key": {"type": "string"},
+    "lat": {"type": "number", "minimum": -90, "maximum": 90},
+    "lon": {"type": "number", "minimum": -180, "maximum": 180},
+    "geocode_score": {"type": "number", "minimum": 0, "maximum": 1},
+    "geocode_source": {"type": "string", "enum": ["MapTiler", "Cache", "Manual"]}
+  }
+}

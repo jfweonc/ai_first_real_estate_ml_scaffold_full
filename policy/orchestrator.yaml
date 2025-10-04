@@ -19,12 +19,12 @@ manager_escalate:
   pii_touch: true
 
 role_to_model:
-  manager: gpt-5
-  pm: gpt-5
-  architect: gpt-5
-  security: gpt-5
-  sre: gpt-5
-  data_ml: gpt-5
+  manager: gpt-5-thinking
+  pm: gpt-5-thinking
+  architect: gpt-5-thinking
+  security: gpt-5-thinking
+  sre: gpt-5-thinking
+  data_ml: gpt-5-thinking
   backend: codex-latest
   frontend: codex-latest
   test: codex-latest

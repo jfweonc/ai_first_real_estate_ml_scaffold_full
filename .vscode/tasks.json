@@ -55,6 +55,23 @@
       "label": "Orchestrator: run story (prompt for id)",
       "type": "shell",
       "command": "python tools/conductor.py run --id P05-CLI"
+    },
+    {
+      "label": "ETL: import-csv (dry-run)",
+      "type": "shell",
+      "command": "python -m src.relml.cli import-csv --root data/raw --dry-run"
+    },
+    {
+      "label": "ETL: index-images (dry-run)",
+      "type": "shell",
+      "command": "python -m src.relml.cli index-images --root data/raw --dry-run",
+      "problemMatcher": []
+    },
+    {
+      "label": "ETL: geocode (dry-run)",
+      "type": "shell",
+      "command": "python -m src.relml.cli geocode --input data/processed/listings.parquet --dry-run",
+      "problemMatcher": []
     }
   ]
 }

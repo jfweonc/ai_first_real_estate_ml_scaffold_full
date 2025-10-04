@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CLI ETL Output",
+  "type": "object",
+  "required": [
+    "event",
+    "module",
+    "version",
+    "summary"
+  ],
+  "properties": {
+    "event": {
+      "type": "string",
+      "enum": [
+        "dry_run_summary",
+        "ingest_summary"
+      ]
+    },
+    "module": {
+      "type": "string",
+      "enum": [
+        "import_csv",
+        "index_images",
+        "geocode"
+      ]
+    },
+    "version": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "files_discovered": {
+          "type": "integer"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ledgers": {
+          "type": "array",
+          "items": {
+            "$ref": "etl_ledger.schema.json"
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

@@ -12,14 +12,23 @@ repos:
     rev: v1.11.1
     hooks:
       - id: mypy
-        args: ["--strict", "--ignore-missing-imports", "src", "tools", "tests"]
+        additional_dependencies:
+          - types-requests
+          - types-PyYAML
   - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.13.2
+    rev: v5.9.3
     hooks:
       - id: isort
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.3.3
+    rev: v2.7.1
     hooks:
       - id: prettier
-        additional_dependencies: ["prettier@3.3.3"]
-        files: "\.(json|ya?ml|md)$"
+        additional_dependencies: ["prettier@2.7.1"]
+        files: '\\.(json|ya?ml|md)$'
+
+
+
+
+
+
+

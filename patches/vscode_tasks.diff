@@ -1,0 +1,26 @@
+--- a/.vscode/tasks.json
++++ b/.vscode/tasks.json
+@@
+ {
+   "version": "2.0.0",
+   "tasks": [
++    {
++      "label": "ETL: import-csv (dry run)",
++      "type": "shell",
++      "command": "python -m relml import-csv --root data/raw --dry-run",
++      "problemMatcher": []
++    },
++    {
++      "label": "ETL: index-images (dry run)",
++      "type": "shell",
++      "command": "python -m relml index-images --root data/raw --dry-run",
++      "problemMatcher": []
++    },
++    {
++      "label": "ETL: geocode (dry run)",
++      "type": "shell",
++      "command": "python -m relml geocode --input data/clean/listings.parquet --dry-run",
++      "problemMatcher": []
++    }
+   ]
+ }

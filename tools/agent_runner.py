@@ -1,17 +1,24 @@
 from __future__ import annotations
-import argparse, sys, json, pathlib, textwrap, datetime
-from typing import List
+
+import argparse
+import datetime
+import pathlib
+import textwrap
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 HEADER = (
-    """\n### HOW TO USE\nCopy everything below into your AI chat as a single message.\nReturn ONLY the requested format (JSON or unified diffs).\n"""
+    "\n### HOW TO USE\n"
+    "Copy everything below into your AI chat as a single message.\n"
+    "Return ONLY the requested format (JSON or unified diffs).\n"
 )
+
 
 def read(p: pathlib.Path) -> str:
     return p.read_text(encoding="utf-8")
 
-def load_files(paths: List[str]) -> str:
+
+def load_files(paths: list[str]) -> str:
     blocks = []
     for s in paths:
         p = (ROOT / s).resolve()
@@ -23,6 +30,7 @@ def load_files(paths: List[str]) -> str:
         content = read(p)
         blocks.append(f"\n===== FILE: {s} =====\n{content}\n")
     return "\n".join(blocks)
+
 
 ROLE_FILES = {
     "manager": ".agents/manager.md",
@@ -44,7 +52,8 @@ DEF_CONTEXT = [
 
 SCHEMA_HINT = "Contracts you must respect live under contracts/*. Do not change them without producing an ADR."
 
-def prompt_for_role(role: str, goal: str | None, files: List[str]) -> str:
+
+def prompt_for_role(role: str, goal: str | None, files: list[str]) -> str:
     role_md = read(ROOT / ROLE_FILES[role])
     guard = load_files(DEF_CONTEXT)
     ctx = load_files(files)
@@ -59,19 +68,23 @@ def prompt_for_role(role: str, goal: str | None, files: List[str]) -> str:
         - {SCHEMA_HINT}
         """
     )
-    return "\n".join([
-        HEADER,
-        "\n### ROLE DESCRIPTION\n" + role_md,
-        pre,
-        "\n### CONTRACT FILES\n" + guard,
-        "\n### PROJECT FILES\n" + ctx,
-    ])
+    return "\n".join(
+        [
+            HEADER,
+            "\n### ROLE DESCRIPTION\n" + role_md,
+            pre,
+            "\n### CONTRACT FILES\n" + guard,
+            "\n### PROJECT FILES\n" + ctx,
+        ]
+    )
 
-def emit_rfc(goal: str, files: List[str]) -> None:
+
+def emit_rfc(goal: str, files: list[str]) -> None:
     rfc_id = f"RFC-{datetime.datetime.utcnow().strftime('%Y-%m-%d-%H%M%S')}"
     prompt = prompt_for_role("manager", goal, files)
     print(prompt)
     print(f"\n# Save the returned JSON to bus/rfc/{rfc_id}.json\n")
+
 
 def main() -> None:
     ap = argparse.ArgumentParser()
@@ -113,6 +126,7 @@ def main() -> None:
         return
 
     print(prompt_for_role(args.role, args.goal, files))
+
 
 if __name__ == "__main__":
     main()

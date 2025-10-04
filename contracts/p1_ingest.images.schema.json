@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "P1 Ingest Images Manifest Row",
+  "type": "object",
+  "required": ["listing_key", "domain", "sha1", "filename", "width", "height"],
+  "properties": {
+    "listing_key": {"type": "string"},
+    "domain": {"type": "string"},
+    "sha1": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+    "filename": {"type": "string"},
+    "width": {"type": "integer", "minimum": 1},
+    "height": {"type": "integer", "minimum": 1}
+  }
+}

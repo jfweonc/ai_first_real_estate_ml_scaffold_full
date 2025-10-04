@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "P4 Features Row (train)",
+  "type": "object",
+  "required": ["listing_key", "y_list_price", "f_sqft", "f_beds", "f_baths", "f_zip_idx"],
+  "properties": {
+    "listing_key": {"type": "string"},
+    "y_list_price": {"type": "number"},
+    "f_sqft": {"type": ["number", "null"]},
+    "f_beds": {"type": ["number", "null"]},
+    "f_baths": {"type": ["number", "null"]},
+    "f_zip_idx": {"type": "integer"},
+    "img_clip_512": {"type": "array", "items": {"type": "number"}, "minItems": 512, "maxItems": 512}
+  }
+}

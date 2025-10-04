@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "P1 Ingest Input (raw HAR rows)",
+  "type": "object",
+  "required": ["listing_key", "domain", "matrix_modified_dt", "address", "city", "state", "zip", "list_price", "property_type"],
+  "properties": {
+    "listing_key": {"type": "string", "minLength": 1},
+    "domain": {"type": "string", "enum": ["HAR", "TEST"]},
+    "matrix_modified_dt": {"type": "string", "format": "date-time"},
+    "address": {"type": "string"},
+    "city": {"type": "string"},
+    "state": {"type": "string", "pattern": "^[A-Z]{2}$"},
+    "zip": {"type": "string", "pattern": "^\\d{5}(-\\d{4})?$"},
+    "list_price": {"type": "number", "minimum": 0},
+    "sqft": {"type": ["number", "null"], "minimum": 0},
+    "beds": {"type": ["integer", "null"], "minimum": 0},
+    "baths": {"type": ["number", "null"], "minimum": 0},
+    "property_type": {"type": "string"}
+  },
+  "additionalProperties": true
+}

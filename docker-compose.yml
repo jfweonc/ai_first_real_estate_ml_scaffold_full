@@ -1,0 +1,17 @@
+﻿services:
+  db:
+    image: postgres:16
+    container_name: relml-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: real_estate_ml_dev
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db/ddl:/docker-entrypoint-initdb.d:ro
+volumes:
+  db_data:

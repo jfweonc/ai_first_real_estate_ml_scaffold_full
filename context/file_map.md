@@ -5,5 +5,7 @@
 - bus/* : RFC/Proposal/Critique/Decision JSON (+ capabilities.jsonl)
 - docs/* : backlog, runbooks, roles, ADRs
 - tools/* : agent runner, patch applier, capability reviewer, conductor
-- src/relml/* : minimal CLI and utilities (agents will extend)
+- src/relml/cli.py : Typer CLI entrypoint for doctor/import-csv
+- src/relml/etl/* : ETL pipelines (import_csv stub today; others planned)
+- src/relml/util/* : shared helpers (path utilities, etc.)
 - tests/* : prompt contract tests for agent outputs

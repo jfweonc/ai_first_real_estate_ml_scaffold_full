@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "P5 Train Metrics",
+  "type": "object",
+  "required": ["rmse", "mape", "r2", "n_train", "cv_scheme"],
+  "properties": {
+    "rmse": {"type": "number"},
+    "mape": {"type": "number"},
+    "r2": {"type": "number"},
+    "n_train": {"type": "integer"},
+    "cv_scheme": {"type": "string"},
+    "calibration": {
+      "type": "object",
+      "properties": {"pinball_0.1": {"type": "number"}, "pinball_0.9": {"type": "number"}}
+    }
+  }
+}

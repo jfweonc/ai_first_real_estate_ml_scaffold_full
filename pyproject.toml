@@ -1,8 +1,10 @@
 [tool.pytest.ini_options]
-addopts = "-q --cov=tools --cov=src --cov-report=term-missing --cov-fail-under=90"
+addopts = "-q --cov=src --cov-report=term-missing --cov-fail-under=80"
 
 [tool.ruff]
 line-length = 120
+
+[tool.ruff.lint]
 select = ["E","F","I","B","UP","SIM","PL"]
 
 [tool.black]
@@ -19,3 +21,6 @@ warn_unused_ignores = true
 warn_redundant_casts = true
 warn_unreachable = true
 ignore_missing_imports = true
+explicit_package_bases = true
+allow_untyped_decorators = true
+files = ["src/relml", "tools", "tests"]

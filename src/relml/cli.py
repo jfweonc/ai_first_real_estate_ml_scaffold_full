@@ -1,13 +1,68 @@
 from __future__ import annotations
+
+from pathlib import Path
+
+import structlog
 import typer
-from rich import print
+from rich.console import Console
+
+from . import etl
 
 app = typer.Typer(add_completion=False, no_args_is_help=True)
+console = Console()
+logger = structlog.get_logger(__name__)
+
+
+def _configure_structlog() -> None:
+    """Apply a basic structlog configuration for CLI usage."""
+    structlog.configure(
+        processors=[
+            structlog.processors.add_log_level,
+            structlog.processors.TimeStamper(fmt="iso"),
+            structlog.processors.StackInfoRenderer(),
+            structlog.processors.format_exc_info,
+            structlog.processors.JSONRenderer(),
+        ],
+        wrapper_class=structlog.make_filtering_bound_logger(20),
+        cache_logger_on_first_use=True,
+    )
+
+
+@app.callback()
+def main() -> None:  # pragma: no cover - invoked by Typer automatically
+    _configure_structlog()
+
 
 @app.command()
 def doctor() -> None:
     """Basic sanity checks for the scaffold."""
-    print("[green]✅ Environment OK[/green]")
+    console.print("[green]Environment OK[/green]")
+
+
+@app.command("import-csv")
+def import_csv(
+    root: Path = typer.Option(  # noqa: B008
+        Path("data/raw"),
+        help="Directory containing CSV files to ingest.",
+    ),
+    dry_run: bool = typer.Option(  # noqa: B008
+        False,
+        help="Discover files without writing outputs.",
+    ),
+) -> None:
+    """Discover CSV files and emit a stub summary (Phase 0.5 placeholder)."""
+
+    result = etl.import_csv(root=root, dry_run=dry_run)
+    console.print(f"[cyan]{result.message}[/cyan]")
+    logger.info(
+        "cli.import_csv.complete",
+        root=str(result.root),
+        discovered_files=result.discovered_files,
+        processed_files=result.processed_files,
+        skipped_files=result.skipped_files,
+        dry_run=dry_run,
+    )
+
 
 if __name__ == "__main__":
     app()

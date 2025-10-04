@@ -17,6 +17,10 @@ python -m venv .venv && source .venv/bin/activate  # Windows: .venv\Scripts\acti
 pip install -r requirements.txt
 pre-commit install
 ```
+This installs tooling on the host so pre-commit hooks, the Typer CLI (``python -m src.relml.cli``),
+and the orchestrator scripts can run without Docker overhead.
+When you prefer containers, build the images with ``docker compose build`` and run slices via
+``docker compose run --rm app <command>``.
 
 ### 2) Optional: Configure environment
 ```bash
