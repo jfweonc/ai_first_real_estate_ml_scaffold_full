@@ -43,15 +43,22 @@ def doctor() -> None:
 def import_csv(
     root: Path = typer.Option(  # noqa: B008
         Path("data/raw"),
+        "--root",
+        file_okay=False,
+        dir_okay=True,
+        resolve_path=True,
         help="Directory containing CSV files to ingest.",
     ),
     dry_run: bool = typer.Option(  # noqa: B008
         False,
+        "--dry-run",
+        is_flag=True,
         help="Discover files without writing outputs.",
     ),
 ) -> None:
     """Discover CSV files and emit a stub summary (Phase 0.5 placeholder)."""
 
+    root = root.expanduser().resolve()
     result = etl.import_csv(root=root, dry_run=dry_run)
     console.print(f"[cyan]{result.message}[/cyan]")
     logger.info(

@@ -1,0 +1,3 @@
+listing_key,domain,matrix_modified_dt,address,city,state,zip,list_price,sqft,beds,baths,property_type
+HAR123,TEST,2024-12-01T12:00:00Z,6015 Nowlands Run Ln,Sugar Land,TX,77479,485000,2850,4,3,Single-Family
+HAR124,TEST,2024-12-02T13:30:00Z,1234 Sample Ct,Houston,TX,77002,325000,1650,3,2,Townhouse
