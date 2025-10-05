@@ -53,7 +53,10 @@ def run_runner(  # noqa: PLR0913
         cmd += ["--for-proposal", for_proposal]
     if decide_rfc:
         cmd += ["--decide", decide_rfc]
-    out = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    env = os.environ.copy()
+    env.setdefault("PYTHONIOENCODING", "utf-8")
+    env.setdefault("PYTHONUTF8", "1")
+    out = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", check=False, env=env)
     if out.returncode != 0:
         raise RuntimeError(f"agent_runner failed: {out.stderr}")
     return out.stdout

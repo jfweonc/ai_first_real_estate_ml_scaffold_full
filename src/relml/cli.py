@@ -63,11 +63,7 @@ def import_csv(
     console.print(f"[cyan]{result.message}[/cyan]")
     logger.info(
         "cli.import_csv.complete",
-        root=str(result.root),
-        discovered_files=result.discovered_files,
-        processed_files=result.processed_files,
-        skipped_files=result.skipped_files,
-        dry_run=dry_run,
+        event=result.to_event(),
     )
 
 

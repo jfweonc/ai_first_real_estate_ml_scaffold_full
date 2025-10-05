@@ -8,3 +8,5 @@ reports/
 .vscode/settings.json
 .bus-cache/
 Data/
+.coverage
+coverage.xml

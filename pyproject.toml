@@ -1,5 +1,8 @@
 [tool.pytest.ini_options]
 addopts = "-q --cov=src --cov-report=term-missing --cov-fail-under=80"
+markers = [
+  "integration: requires Docker and Postgres"
+]
 
 [tool.ruff]
 line-length = 120
