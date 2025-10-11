@@ -1,0 +1,17 @@
+﻿phase: phase01_a3_har_downloader
+targets:
+  - src/relml/etl/har_downloader.py
+  - tests/test_har_downloader.py
+  - configs/acq.yaml
+  - docs/P1_Acq_Operations.md
+  - .vscode/tasks.json
+halo: []
+acceptance:
+  - "python -m pytest --no-cov -q tests/test_har_downloader.py"
+context_refs:
+  brief: project_brief@v1
+  schema: mls_schema@v3
+  guardrails: guardrails@v2
+constraints:
+  py: "3.11"
+  style: "ruff"

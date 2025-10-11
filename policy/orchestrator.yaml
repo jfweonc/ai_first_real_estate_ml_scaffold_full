@@ -19,15 +19,15 @@ manager_escalate:
   pii_touch: true
 
 role_to_model:
-  manager: gpt-5-thinking
-  pm: gpt-5-thinking
-  architect: gpt-5-thinking
-  security: gpt-5-thinking
-  sre: gpt-5-thinking
-  data_ml: gpt-5-thinking
-  backend: codex-latest
-  frontend: codex-latest
-  test: codex-latest
+  manager: gpt-4o
+  pm: gpt-4o
+  architect: gpt-4o
+  security: gpt-4o
+  sre: gpt-4o
+  data_ml: gpt-4o
+  backend: gpt-4o-mini
+  frontend: gpt-4o-mini
+  test: gpt-4o-mini
 
 lanes:
   build: ["test", "backend", "test"]

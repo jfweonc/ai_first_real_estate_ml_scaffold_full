@@ -51,7 +51,7 @@ pytest -q
 ```
 
 ### 7.1) Test-first workflow (TDD)
-1) Run **Agent: Test — Generate Phase 0.5 Tests** (or route Test via Manager).  
+1) Run **Agent: Test — Generate Phase 1 Tests** (or route Test via Manager).  
 2) Apply the returned **unified diff** (tests will initially **fail**).  
 3) Route **Backend** to implement; apply its diff.  
 4) Re-run `pytest -q` (CI also runs `ruff`, `mypy`, and `pytest` with ≥90% coverage).
@@ -63,3 +63,12 @@ Temporary (YELLOW) auto-extensions are logged in `bus/capabilities.jsonl`. Revie
 ```bash
 python tools/capability_review.py --since 2025-09-01 --out reports/capability_review.md
 ```
+## Orchestrator Workflow
+
+See `docs/OrchestratorWorkflow.md` for a lightweight loop to:
+- emit current state,
+- request planning guidance from GPT-5 (copy/paste or optional API call),
+- apply guarded patches,
+- run focused tests, and
+- write status + handoff artifacts.
+

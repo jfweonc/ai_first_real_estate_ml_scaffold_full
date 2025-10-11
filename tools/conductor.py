@@ -2,15 +2,13 @@ from __future__ import annotations
 
 import argparse
 import datetime
+import importlib
 import json
 import os
 import pathlib
 import subprocess
 import sys
 from typing import Any, cast
-
-import requests
-import yaml
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 BUS = ROOT / "bus"
@@ -23,7 +21,8 @@ def now_id() -> str:
 
 
 def load_yaml(p: pathlib.Path) -> dict[str, Any]:
-    data = yaml.safe_load(p.read_text(encoding="utf-8"))
+    yaml_module = cast(Any, importlib.import_module("yaml"))
+    data = yaml_module.safe_load(p.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
         raise ValueError(f"Expected mapping in {p} but found {type(data).__name__}")
     return cast(dict[str, Any], data)
@@ -69,12 +68,14 @@ def post_openai(model: str, prompt_text: str, max_output_tokens: int = 4000) -> 
     url = "https://api.openai.com/v1/responses"
     payload = {
         "model": model,
-        "input": [{"role": "user", "content": [{"type": "text", "text": prompt_text}]}],
+        "input": [{"role": "user", "content": [{"type": "input_text", "text": prompt_text}]}],
         "max_output_tokens": max_output_tokens,
     }
     headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
-    response = requests.post(url, headers=headers, json=payload, timeout=300)
-    response.raise_for_status()
+    requests_module = cast(Any, importlib.import_module("requests"))
+    response = requests_module.post(url, headers=headers, json=payload, timeout=300)
+    if not response.ok:
+        raise RuntimeError(f"OpenAI API error {response.status_code}: {response.text}")
     data = response.json()
     if not isinstance(data, dict):
         raise ValueError("Unexpected OpenAI response payload")

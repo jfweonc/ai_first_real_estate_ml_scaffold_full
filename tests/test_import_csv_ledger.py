@@ -50,6 +50,10 @@ def test_import_csv_writes_ledger_entries_and_is_idempotent(postgres_url: str) -
 
     assert result1.processed_files == 1
     assert result1.skipped_files == 0
+    assert result1.parsed_row_count == EXPECTED_ROW_COUNT
+    assert result1.rows_quarantined_total == 0
+    assert result1.coverage_metrics["rows_total"] == EXPECTED_ROW_COUNT
+    assert result1.coverage_metrics["rows_clean"] == EXPECTED_ROW_COUNT
 
     rows = _fetch_ledger_rows(postgres_url)
     assert len(rows) == 1
@@ -64,9 +68,9 @@ def test_import_csv_writes_ledger_entries_and_is_idempotent(postgres_url: str) -
     assert status == EXPECTED_STATUS
     assert rows_total == EXPECTED_ROW_COUNT
     assert rows_clean == EXPECTED_ROW_COUNT
-    assert result1.ledgers and result1.ledgers[0]["status"] == EXPECTED_STATUS
     assert rows_quarantined == 0
     assert raw_source.endswith("raw_listings_sample.csv")
+    assert result1.ledgers and result1.ledgers[0]["status"] == EXPECTED_STATUS
 
     result2 = import_csv(FIXTURE_ROOT, dry_run=False)
     assert result2.processed_files == 0

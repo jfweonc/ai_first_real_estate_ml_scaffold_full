@@ -1,77 +1,69 @@
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "label": "Agent: Manager \u2014 Start RFC",
-      "type": "shell",
-      "command": "python tools/agent_runner.py --role manager --goal '<<type your goal>>' --files context/phase_plan.md context/file_map.md .agents/guardrails.md --engine gpt5 --emit rfc"
-    },
-    {
-      "label": "Agent: Architect \u2014 Propose for RFC",
-      "type": "shell",
-      "command": "python tools/agent_runner.py --role architect --for-rfc <<RFC-ID>> --files context/phase_plan.md .agents/guardrails.md --engine gpt5"
-    },
-    {
-      "label": "Agent: Test \u2014 Critique Proposal",
-      "type": "shell",
-      "command": "python tools/agent_runner.py --role test --for-proposal <<PROP-ID>> --files .agents/guardrails.md --engine codex"
-    },
-    {
-      "label": "Agent: Manager \u2014 Decide",
-      "type": "shell",
-      "command": "python tools/agent_runner.py --role manager --decide <<RFC-ID>> --engine gpt5"
-    },
-    {
-      "label": "Apply Patch",
-      "type": "shell",
-      "command": "python tools/apply_patch.py --diff path/to/diff.patch"
-    },
-    {
-      "label": "Capability Review Report",
-      "type": "shell",
-      "command": "python tools/capability_review.py --since 2025-09-01 --out reports/capability_review.md"
-    },
-    {
-      "label": "Agent: Test \u2014 Generate Phase 0.5 Tests",
-      "type": "shell",
-      "command": "python tools/agent_runner.py --role test --goal \"Write failing tests for Phase 0.5 CSV ingest + coverage report\" --files context/phase_plan.md .agents/guardrails.md --engine codex"
-    },
-    {
-      "label": "Pytest (quick)",
-      "type": "shell",
-      "command": "pytest -q"
-    },
-    {
-      "label": "Orchestrator: init backlog",
-      "type": "shell",
-      "command": "python tools/conductor.py init-backlog"
-    },
-    {
-      "label": "Orchestrator: run next story",
-      "type": "shell",
-      "command": "python tools/conductor.py next"
-    },
-    {
-      "label": "Orchestrator: run story (prompt for id)",
-      "type": "shell",
-      "command": "python tools/conductor.py run --id P05-CLI"
-    },
-    {
-      "label": "ETL: import-csv (dry-run)",
-      "type": "shell",
-      "command": "python -m src.relml.cli import-csv --root data/raw --dry-run"
-    },
-    {
-      "label": "ETL: index-images (dry-run)",
-      "type": "shell",
-      "command": "python -m src.relml.cli index-images --root data/raw --dry-run",
-      "problemMatcher": []
-    },
-    {
-      "label": "ETL: geocode (dry-run)",
-      "type": "shell",
-      "command": "python -m src.relml.cli geocode --input data/processed/listings.parquet --dry-run",
-      "problemMatcher": []
-    }
-  ]
+    "version":  "2.0.0",
+    "tasks":  [
+                  {
+                      "label":  "AI: Apply Patch",
+                      "type":  "shell",
+                      "command":  "python -m orchestrator.cli apply patches/0001.diff",
+                      "problemMatcher":  [
+
+                                         ]
+                  },
+                  {
+                      "label":  "AI: Test (quick)",
+                      "type":  "shell",
+                      "command":  "python -m orchestrator.cli test",
+                      "problemMatcher":  [
+
+                                         ]
+                  },
+                  {
+                      "label":  "AI: Status",
+                      "type":  "shell",
+                      "command":  "python -m orchestrator.cli status",
+                      "problemMatcher":  [
+
+                                         ]
+                  },
+                  {
+                      "label":  "AI: Build planning request (copy)",
+                      "type":  "shell",
+                      "command":  "python -m orchestrator.cli make-request",
+                      "problemMatcher":  [
+
+                                         ]
+                  },
+                  {
+                      "label":  "AI: (opt) Call GPT-5 API",
+                      "type":  "shell",
+                      "command":  "python -m orchestrator.cli call-gpt5",
+                      "problemMatcher":  [
+
+                                         ]
+                  },
+                  {
+                      "label":  "P1: Detect gaps (last 14d)",
+                      "type":  "shell",
+                      "command":  "python -m etl.gap_detector --since 14d --until yesterday",
+                      "problemMatcher":  [
+
+                                         ]
+                  },
+                  {
+                      "label":  "P1: Download HAR (missing only)",
+                      "type":  "shell",
+                      "command":  "python -m etl.har_downloader --since 14d --until yesterday --images --dry-run",
+                      "problemMatcher":  [
+
+                                         ]
+                  },
+                  {
+                      "label":  "P1: Mark today partial",
+                      "type":  "shell",
+                      "command":  "python -m etl.har_downloader --today",
+                      "problemMatcher":  [
+
+                                         ]
+                  }
+              ]
 }

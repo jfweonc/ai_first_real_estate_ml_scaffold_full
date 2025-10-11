@@ -2,9 +2,9 @@
 Date: 2025-09-30
 
 Roles & Models
-- Manager/Conductor -> gpt-5-thinking
-- Specialist (Backend/Test) -> codex-latest
-- Reviewer (Lint/Style) -> codex-latest
+- Manager/Conductor -> gpt-4o
+- Specialist (Backend/Test) -> gpt-4o-mini
+- Reviewer (Lint/Style) -> gpt-4o-mini
 
 Execution Default
 - Docker-first (compose services), fall back to host for quick lint/unit loops when needed.

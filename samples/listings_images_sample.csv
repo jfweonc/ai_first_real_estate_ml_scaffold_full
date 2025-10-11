@@ -1,0 +1,10 @@
+﻿listing_key,domain,zip,status
+HAR100,SALE,77002,complete
+HAR101,SALE,77002,missing
+HAR102,SALE,77479,missing
+HAR103,SALE,77479,complete
+HAR200,RENTAL,77002,no_images
+HAR201,RENTAL,77002,complete
+HAR202,RENTAL,73301,missing
+HAR203,RENTAL,73301,complete
+HAR204,RENTAL,73301,missing

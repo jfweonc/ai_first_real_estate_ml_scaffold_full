@@ -1,11 +1,11 @@
 """
-Spec: Phase 0.5 - CSV ingest & coverage inventory
+Spec: Phase 1 - Data ingestion & coverage inventory
 
 How to run locally:
-    pytest -q tests/specs/test_phase05_csv_ingest_spec.py
+    pytest -q tests/specs/test_phase01_csv_ingest_spec.py
 
 Notes:
-- This spec encodes acceptance for the Phase 0.5 thin slice.
+- This spec encodes acceptance for the Phase 1 thin slice.
 - Remaining tests stay xfail until the Backend slice lands.
 """
 

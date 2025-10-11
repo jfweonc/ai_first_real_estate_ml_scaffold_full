@@ -16,6 +16,8 @@ def test_import_csv_stub_counts_csv_files(tmp_path: pathlib.Path) -> None:
     assert result.discovered_files == 1
     assert result.processed_files == 0
     assert result.skipped_files == 1
+    assert result.coverage_metrics["rows_total"] == 0
+    assert result.quarantine_file is None
     assert "Scanned" in result.message
 
 
@@ -24,4 +26,5 @@ def test_import_csv_stub_handles_missing_root(tmp_path: pathlib.Path) -> None:
     result = etl.import_csv(missing_root, dry_run=True)
     assert result.discovered_files == 0
     assert result.processed_files == 0
+    assert result.coverage_metrics["rows_total"] == 0
     assert result.root == missing_root.resolve()

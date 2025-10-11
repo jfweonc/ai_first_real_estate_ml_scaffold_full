@@ -65,11 +65,12 @@ _Last updated: 2025‑09‑29 (America/Chicago)_
 |   |   `-- fs.py
 |   `-- etl/
 |       |-- __init__.py
-|       `-- import_csv.py   # Current Phase 0.5 stub
+|       `-- import_csv.py   # Current Phase 1 slice
 |-- tests/
 |   |-- test_cli_doctor.py
 |   `-- specs/
-|       `-- test_phase05_csv_ingest_spec.py
+|       |-- test_phase01_csv_ingest_spec.py
+|       `-- test_phase01_validation_spec.py
 |-- tools/
 |   |-- agent_runner.py
 |   |-- apply_patch.py
@@ -109,25 +110,41 @@ _Last updated: 2025‑09‑29 (America/Chicago)_
 
 ## 4) Phase Roadmap (Order & Rationale)
 
-> The user wants **Phase 0 → Phase 0.5 → Phase 2 → Phase 1 → later ML**. This front‑loads coverage & existing assets to avoid re‑downloading.
+> Current sequence: **Phase 0 -> Phase 0.5 -> Phase 1 -> Phase 2 -> Phase 3 -> Phase 4 -> Phase 5 -> Phase 6 -> Phase 7 -> Phase 8 -> Phase 9** (per docs/PhasePlan).
 
-- **Phase 0 — Bootstrap & Guardrails**
-  - Docker Compose, pinned deps, pre‑commit, CI green.
-  - VS Code tasks for lint/test/build/data jobs.
-- **Phase 0.5 — Recon & Coverage**
-  - Inventory CSVs & image zips already downloaded.
-  - Emit coverage reports to `data/reports/coverage_*.html`.
-- **Phase 2 — Images first**
-  - Normalize existing images before more downloads.
-  - Compute per‑listing **`images_download_status {none|partial|complete}`**, `images_count`, and `images_last_checked`.
-- **Phase 1 — CSV ingest → staging**
-  - Ingest CSVs with **ledger**, validation, quarantine, conflicts.
-  - Produce clean Parquet/DB slice for downstream.
-- **Later Phases — Geocode, Dedupe, Features, Models**
-  - **Geocode** incrementally (MapTiler).
-  - **Dedupe** listings; canonical keys.
-  - Feature store; embeddings (CLIP/DINOv2), training, evaluation.
-
+- **Phase 0 -- Charter & Repo Scaffold**
+  - Pin tooling, guardrails, CI; publish ProjectBrief and Guardrails docs.
+  - Stand up the repo skeleton and baseline automation hooks.
+- **Phase 0.5 -- Orchestrator & Local Loop**
+  - Ship the Typer CLI + guarded diff applier so agents can loop locally.
+  - Seed VS Code tasks and .ai context for planning/apply/test/status.
+- **Phase 1 -- Data Ingestion & Staging**
+  - Ingest MLS/HAR CSVs with validation, quarantine, ledger, and samples.
+  - Stage image manifests with hashes/status; emit coverage and selected_listings artifacts.
+- **Phase 2 -- Tooling & Experimentation (EDA sandbox)**
+  - Build reproducible notebooks/scripts fed only from staging outputs.
+  - Generate hygiene reports (missingness, leakage, distributions) and export markdown.
+- **Phase 3 -- ETL v1 (Clean & Normalize)**
+  - Normalize listings into analysis tables with canonical keys and dedupe.
+  - Share common transforms that feed downstream feature work.
+- **Phase 4 -- Feature Engineering v1 (Tabular)**
+  - Produce supervised feature matrices with aggregation windows and metadata.
+  - Keep feature generation reproducible and stored for modeling.
+- **Phase 5 -- Baseline Models (Tabular)**
+  - Train time-aware tree baselines with conformal intervals and Optuna sweeps.
+  - Track experiments in MLflow and evaluate modality lift.
+- **Phase 6 -- Multimodal Add-On (Images + Tabular)**
+  - Embed images, fuse modalities, and benchmark vs tabular baselines.
+  - Cache embeddings and parallelize IO for throughput.
+- **Phase 7 -- Packaging & MLOps Ready**
+  - Package modules, version artifacts, and write runbooks/SLOs.
+  - Provide scripts to train/evaluate/promote with traceable outputs.
+- **Phase 8 -- Serving & Reporting (internal)**
+  - Automate batch predictions and static reports; optional lightweight API.
+  - Keep outputs linkable to their source data.
+- **Phase 9 -- Monitoring, Drift & Retraining**
+  - Monitor MAE/coverage/drift, alert on thresholds, and schedule retrains.
+  - Track cost/performance and verify the retrain path end-to-end.
 ---
 
 ## 5) Data Contracts & Idempotence Keys
@@ -167,7 +184,7 @@ _Last updated: 2025‑09‑29 (America/Chicago)_
 - Normalize minimal fields (e.g., `ZIP5`, dates, strip whitespace).
 - Write clean rows to staging (DB or Parquet). Record ledger row.
 **Outputs:** clean slice + `data/reports/quarantine_rows.csv`, `conflicts.csv`  
-**CLI:** `python -m src.relml.cli import-csv --root data/raw --dry-run` (Phase 0.5 stub)  
+**CLI:** `python -m src.relml.cli import-csv --root data/raw --dry-run` (Phase 1 slice)  
 **Tests:** empty/malformed files, duplicate rows, idempotent re‑run, large file streaming.
 
 ### Module 2 – `src/relml/etl/index_images.py` (planned)
@@ -339,7 +356,7 @@ A: `build` compiles images; `up -d --build` builds **and** starts services in ba
 
 - User is a licensed **real estate agent** with MLS access, focused on Houston/Sugar Land.  
 - Prefers **MapTiler** geocoding, Windows‑friendly tooling, Docker reproducibility.  
-- Wants **images normalized early** (Phase 2 before Phase 1) to maximize reuse of already‑downloaded assets.  
+- Wants ingestion and coverage solid in Phase 1 before pushing later automation slices.  
 - Emphasizes **automation, tests, and docs**; expects small, composable modules.
 
 ---

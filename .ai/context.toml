@@ -1,0 +1,11 @@
+# Context pins for the orchestrator planning loop
+phase_manifest = "phases/phase_current_manifest.yaml"
+
+[context_refs]
+brief = "project_brief@v1"
+schema = "mls_schema@v3"
+guardrails = "guardrails@v2"
+
+[constraints]
+py = "3.11"
+style = "ruff"

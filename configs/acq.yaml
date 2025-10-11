@@ -1,0 +1,20 @@
+﻿limits:
+  max_listings_per_run: 5000
+  max_images_listings_batch: 100
+  concurrency: 4
+  rate_avg_rps: 2.0
+images:
+  enabled: true
+  zip_filters: []
+range:
+  since: '14d'
+  until: 'yesterday'
+runner:
+  dry_run: false
+source_for_gaps: 'stage'
+expected_min:
+  listings_per_day:
+  images_ratio:
+auth:
+  user_env: HAR_USER
+  pass_env: HAR_PASS
